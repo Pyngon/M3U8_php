@@ -32,7 +32,8 @@ class HLSParser {
             $playlistUri = $rawUri;
             if(!isset($parsedUrl['scheme'])){
                 /* Relative path, have to append from parent */
-                $playlistUri = $parent->getFullPath().$rawUri;
+                $fullPath = $parent->getFullPath();
+                $playlistUri = strlen($fullPath) == 0 ? $rawUri : $parent->getFullPath().'/'.$rawUri;
             }
 
             $content = file_get_contents($playlistUri);

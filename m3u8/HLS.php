@@ -84,7 +84,24 @@ class HLS {
 
         $info = pathinfo($this->uri);
 
-        return $dirpath.$info['dirname'].'/';
+        if (strcmp($info['dirname'], '.') == 0) {
+            return $dirpath;
+        } else if(strlen($dirpath) == 0) {
+            return $info['dirname'];
+        }
+
+        return $dirpath.'/'.$info['dirname'];
+    }
+
+    public function getFullUri() {
+        $path = '';
+        if($this->parent != null){
+            $path = $this->parent->getFullPath();
+        }
+        if(strlen($path) == 0) {
+            return $this->uri;
+        }
+        return $path.'/'.$this->uri;
     }
 
     // Getters and Setters
